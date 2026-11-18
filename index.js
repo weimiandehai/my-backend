@@ -77,5 +77,11 @@ app.put('/api/trash/:id/restore', async (req, res) => {
   res.json({ message: '恢复成功' });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 后端服务器运行在端口: ${PORT}`));
+// 只有本地开发时才启动端口，Vercel 环境不需要
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`🚀 本地服务器运行在端口: ${PORT}`));
+}
+
+// 导出 app 实例供 Vercel 使用
+module.exports = app;
